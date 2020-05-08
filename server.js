@@ -30,6 +30,16 @@ app.get('/books/add', function(req, res) {
   res.render('add');
 });
 
+app.get('/books/:id/delete', function(req, res) {
+  var id = req.params.id;
+  var item = db.get('books').find({ id: id }).value();
+  var index = db.get('books').indexOf(item).value();
+  
+  db.get('books').splice(index, 1).write();
+  
+  res.redirect('back');
+});
+
 app.get('/books/:id/update', function(req, res) {
   var id = req.params.id;
   res.render('update', {
